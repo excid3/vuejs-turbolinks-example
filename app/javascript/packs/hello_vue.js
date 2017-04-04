@@ -8,15 +8,15 @@ import Vue from 'vue/dist/vue.esm'
 import App from './app.vue'
 
 document.addEventListener('turbolinks:load', () => {
-  var element  = document.getElementById("hello")
-  var cachedHtml = element.outerHTML
-
   var vueapp = new Vue({
-    el: element,
+    el: "#hello",
     template: '<App/>',
     components: { App },
+    beforeMount: function() {
+      this.$originalEl = this.$el.outerHTML
+    },
     destroyed: function() {
-      this.$el.outerHTML = cachedHtml;
+      this.$el.outerHTML = this.$originalEl;
     }
   })
 
